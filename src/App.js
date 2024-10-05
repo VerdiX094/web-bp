@@ -64,6 +64,7 @@ const App = () => {
   const onLinkChange = (e) => {
     setLink(e.target.value);
   }
+  
 
   const importBP = async () => {
     if (token == "") {
@@ -84,7 +85,7 @@ const App = () => {
   }
 
   const generateLink = () => {
-    
+
   }
 
   const copyLink = () => {
