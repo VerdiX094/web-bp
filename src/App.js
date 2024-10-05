@@ -28,7 +28,7 @@ const App = () => {
       console.log(result.data.token);
     } catch (error) {
       alert('getToken() error: ', error);
-    }
+    };
   };
 
   const getBPData = async() => {
@@ -41,7 +41,7 @@ const App = () => {
     const params = {
       rocketLink: link,
       clientToken: token
-    }
+    };
 
     try {
       const result = await axios.post(api + "/rocket", params);
@@ -55,15 +55,15 @@ const App = () => {
             ), null, 2));
       } else {
         alert("Couldn't download blueprint data. Either the sharing system is down or recently changed.");
-      }
+      };
     } catch (error) {
       console.error("getBPData() error: " + error);
     }
-  }
+  };
 
   const onLinkChange = (e) => {
     setLink(e.target.value);
-  }
+  };
 
 
   const importBP = async () => {
@@ -74,7 +74,7 @@ const App = () => {
     setStatus("Downloading blueprint data");
     await getBPData();
     setStatus("Done!");
-    setTimeout(() => { setStatus("Idle");}, 2000)
+    setTimeout(() => { setStatus("Idle");}, 2000);
   };
 
   const exportBP = async () => {
@@ -82,11 +82,40 @@ const App = () => {
       setStatus("Initializing sharing");
       await getToken();
     }
-  }
+    generateLink();
+    setStatus("Done!");
+    setTimeout(() => { setStatus("Idle");}, 2000)
+  };
 
-  const generateLink = () => {
+  const generateBPData = () => {
+    try {
+      return btoa(JSON.stringify(JSON.parse(text)))
+    } catch (e) {
+      console.log(e);
+      return "";
+    };
+  };
 
-  }
+  const generateLink = async () => {
+    const t = generateBPData();
+
+    if (t === "") {
+      alert("Invalid BP!");
+      return;
+    };
+
+    const body = {
+      token: token,
+      data: t
+    };
+    try {
+      console.log("Trying to generate link...");
+      const result = await axios.post(api + "/upload", body);
+      setGenLink(result.data.url);
+    } catch (error) {
+      alert('generateLink() error: ', error);
+    };
+  };
 
   const copyLink = () => {
     navigator.clipboard.writeText(generatedLink);
@@ -103,7 +132,7 @@ const App = () => {
       <textarea id="editor" value={text} onChange={handleTextChange} name="" rows="16" cols="32"></textarea>
       <div className="exportHolder">
         <div class="genLink">
-          <button>Generate link</button>
+          <button onClick={exportBP}>Generate link</button>
           <input type="text" value={generatedLink} readOnly="true"></input>
         </div>
         <button onClick={copyLink}>Copy link</button>

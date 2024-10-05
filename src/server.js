@@ -75,8 +75,7 @@ app.post('/api/rocket', async (req, res) => {
         return;
       }
       
-      const decompressedString = decompressedBuffer.toString('utf-8');
-      const base64Reencoded = Buffer.from(decompressedString, 'utf-8').toString('base64');
+      const base64Reencoded = decompressedBuffer.toString('base64');
       data.success = true;
       data.b64data = base64Reencoded;
       res.json(data);
@@ -85,6 +84,39 @@ app.post('/api/rocket', async (req, res) => {
 });
 
 app.post('/api/upload', async (req, res) => {
+  const token = req.body.token;
+  const data = req.body.data;
+
+  const buffer = Buffer.from(data, 'base64');
+
+  zlib.gzip(buffer, async (err, compressed) => {
+    if (err) {
+      console.error('Error during compression:', err);
+      return;
+    }
+    
+    const base64Reencoded = compressed.toString('base64');
+
+    const response = await fetch("https://sharing.spaceflightsimulator.app/api/rockets/linked-upload", {
+      method: "POST",
+      mode: "no-cors",
+      body: JSON.stringify({
+        rocket_data: base64Reencoded,
+        version: "1.5.10.2",
+        preview_url: ""
+      }),
+      headers: {
+      "User-Agent": userAgent,
+      "Login-token": token,
+      "Content-Type": "application/json",
+      }
+    });
+    if (!response.ok) {
+      console.error("kurwa");
+    } else {
+      res.json(await response.json());
+    }
+  });
 
 });
 
