@@ -5,7 +5,8 @@ import { useState } from 'react';
 const App = () => {
   let token = "";
   const [link, setLink] = useState("");
-  const api = 'http://localhost:5000/api'
+  const site = window.location.href.substring(0, window.location.href.indexOf(":", "http://".length-1));
+  const api = `${site}:5000/api`
 
   const [text, setText] = useState(''); // Initial value can be empty or pre-populated
   const [status, setStatusElem] = useState('Status: Idle');
