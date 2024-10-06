@@ -1,6 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 const App = () => {
   var token = "";
@@ -130,6 +131,10 @@ const App = () => {
 
   return (
     <div className="App">
+      <Helmet>
+        <title>WebBP</title>
+        <meta name="description" content="A sharing link-based SFS BP editor." />
+      </Helmet>
       <div className="title">WebBP</div>
       <div className="uploadHolder">
         <input id="inputLink" placeholder="BP link" onChange={onLinkChange}></input>
