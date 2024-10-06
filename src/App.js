@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 const App = () => {
-  let token = "";
+  var token = "";
   const [link, setLink] = useState("");
   const site = window.location.href.substring(0, window.location.href.indexOf(":", "http://".length-1));
   const api = `${site}/api`
@@ -83,7 +83,8 @@ const App = () => {
       setStatus("Initializing sharing");
       await getToken();
     }
-    generateLink();
+    setStatus("Generating link...")
+    await generateLink();
     setStatus("Done!");
     setTimeout(() => { setStatus("Idle");}, 2000)
   };
