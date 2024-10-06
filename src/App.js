@@ -122,6 +122,11 @@ const App = () => {
     navigator.clipboard.writeText(generatedLink);
   }
 
+  const openSFS = () => {
+    let s = link.split("/");
+    window.open(`sfs://rocket/${s[s.length - 1]}`);
+  }
+
   return (
     <div className="App">
       <div className="title">WebBP</div>
@@ -137,7 +142,7 @@ const App = () => {
           <input type="text" value={generatedLink} readOnly="true"></input>
         </div>
         <button onClick={copyLink}>Copy link</button>
-        <button>Open SFS with link</button>
+        <button onClick={openSFS}>Open SFS with link</button>
       </div>
     </div>
   );
