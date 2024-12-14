@@ -49,7 +49,7 @@ const App = () => {
 
       console.log(result.data);
       if (result.data.success) {
-        setText(
+        document.querySelector("#editor").value = (
           JSON.stringify(
             JSON.parse(
               atob(result.data.b64data)
@@ -136,9 +136,9 @@ const App = () => {
         <button id="importBtn" onClick={importBP}>Import</button>
       </div>
       <div className="status">{status}</div>
-      <textarea id="editor" value={text} onChange={handleTextChange} name="" rows="16" cols="32"></textarea>
+      <textarea id="editor" onChange={handleTextChange} name="" rows="16" cols="32"></textarea>
       <div className="exportHolder">
-        <div class="genLink">
+        <div className="genLink">
           <button onClick={exportBP}>Generate link</button>
           <input type="text" value={generatedLink} readOnly="true"></input>
         </div>
