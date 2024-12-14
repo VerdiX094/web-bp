@@ -1,6 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import { useState } from 'react';
+import { Analytics } from "@vercel/analytics/react"
 
 const App = () => {
   var token = "";
@@ -147,6 +148,7 @@ const App = () => {
         <button onClick={openSFS}>Open SFS with link</button>
       </div>
       <div className="author">Made with ❤️ by VerdiX094 in 2024</div>
+      <Analytics/>
     </div>
   );
 }
