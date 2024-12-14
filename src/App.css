@@ -1,5 +1,37 @@
+@import url('https://fonts.cdnfonts.com/css/aller');
+
 * {
-  font-size: 16px;
+  font-size: 12pt;
+  font-family: "Aller", "Segoe UI", sans-serif;
+}
+
+.author {
+  font-size: 8pt;
+}
+
+button, input, textarea {
+  background-color: #404040;
+  border-color: #404040;
+  color: #eee;
+  border-radius: 8px;
+  border-style: none;
+  min-height: 32px;
+}
+
+.editor-holder {
+  width: 100%;
+}
+
+textarea {
+  padding: 8px;
+  width: calc(100% - 16px);
+  max-width: calc(100% - 16px);
+  height: 480px;
+  resize: none;
+}
+
+textarea:focus, input:focus{
+  outline: none;
 }
 
 #editor {
@@ -7,7 +39,7 @@
 }
 
 body {
-  background-color: #404040;
+  background-color: #333;
   color: #eee;
   display: flex;
   flex-direction: column;
@@ -19,13 +51,20 @@ body {
 }
 
 .App {
-  padding: 32px;
-  width: 80%;
-  max-width: 360px;
+  padding: 24px;
+  width: calc(100vw - 48px);
+  max-width: 512px;
+  min-height: calc(100vh - 48px);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
+  background-color: #222;
+}
+
+#editor {
+  width: 100%;
+  font-family: 'Cascadia Code', 'Courier New', Courier, monospace;
 }
 
 .uploadHolder {
@@ -46,18 +85,23 @@ body {
   display: flex;
   gap: 8px;
   flex-direction: row;
+  width: 100%;
 }
 
 .genLink > button {
-  width: 192px;
+  flex-grow: 2;
+}
+
+.genLink > input {
+  flex-grow: 3;
 }
 
 #inputLink {
-  height: 32px;
-  flex-grow: 5;
+  height: calc(32px - 8px);
+  flex-grow: 4;
+  padding: 4px;
 }
 
-.importBtn {
+#importBtn {
   flex-grow: 2;
-  min-height: 32px
 }

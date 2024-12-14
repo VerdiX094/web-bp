@@ -135,16 +135,18 @@ const App = () => {
         <input id="inputLink" placeholder="BP link" onChange={onLinkChange}></input>
         <button id="importBtn" onClick={importBP}>Import</button>
       </div>
-      <div className="status">{status}</div>
-      <textarea id="editor" onChange={handleTextChange} name="" rows="16" cols="32"></textarea>
+      <div className="editor-holder">
+        <textarea id="editor" onChange={handleTextChange} name=""></textarea>
+      </div>
       <div className="exportHolder">
         <div className="genLink">
-          <button onClick={exportBP}>Generate link</button>
-          <input type="text" value={generatedLink} readOnly="true"></input>
+          <button onClick={exportBP}>Export</button>
+          <input type="text" value={generatedLink} readOnly="1"></input>
         </div>
         <button onClick={copyLink}>Copy link</button>
         <button onClick={openSFS}>Open SFS with link</button>
       </div>
+      <div className="author">Made with ❤️ by VerdiX094 in 2024</div>
     </div>
   );
 }
