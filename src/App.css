@@ -18,6 +18,16 @@ button, input, textarea {
   min-height: 32px;
 }
 
+button:hover {
+  background-color: #505050;
+  border-color: #505050;
+}
+
+button:active {
+  background-color: #303030;
+  border-color: #303030;
+}
+
 .editor-holder {
   width: 100%;
 }
