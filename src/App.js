@@ -92,7 +92,7 @@ const App = () => {
 
   const generateBPData = () => {
     try {
-      return btoa(JSON.stringify(JSON.parse(text)))
+      return btoa(JSON.stringify(JSON.parse(document.querySelector("#editor").value)))
     } catch (e) {
       console.log(e);
       return "";
