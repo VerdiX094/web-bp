@@ -1,6 +1,6 @@
 import './App.css';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Analytics } from "@vercel/analytics/react"
 
 const App = () => {
@@ -14,7 +14,9 @@ const App = () => {
 
   const [generatedLink, setGenLink] = useState('')
 
-  setToken(localStorage.getItem("web-bp-token") ?? "");
+  useEffect(() => {
+    setToken(localStorage.getItem("web-bp-token") ?? "");
+  });
 
   const setStatus = (st) => {
     setStatusElem("Status: " + st);
