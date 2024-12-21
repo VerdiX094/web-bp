@@ -14,6 +14,8 @@ const App = () => {
 
   const [generatedLink, setGenLink] = useState('')
 
+  setToken(localStorage.getItem("web-bp-token") ?? "");
+
   const setStatus = (st) => {
     setStatusElem("Status: " + st);
   }
@@ -27,7 +29,7 @@ const App = () => {
     try {
       const result = await axios.post(api + "/init");
       setToken(result.data.token);
-      console.log(result.data.token);
+      localStorage.setItem("web-bp-token", result.data.token);
     } catch (error) {
       alert('getToken() error: ', error);
     };
