@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Analytics } from "@vercel/analytics/react"
 
 const App = () => {
-  var token = "";
+  const [token, setToken] = useState("");
   const [link, setLink] = useState("");
   const site = window.location.href.substring(0, window.location.href.indexOf(":", "http://".length-1));
   const api = `${site}/api`
@@ -26,7 +26,7 @@ const App = () => {
   const getToken = async () => {
     try {
       const result = await axios.post(api + "/init");
-      token = result.data.token;
+      setToken(result.data.token);
       console.log(result.data.token);
     } catch (error) {
       alert('getToken() error: ', error);
