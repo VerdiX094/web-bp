@@ -19,7 +19,7 @@ button, input, textarea {
 }
 
 input {
-  height: calc(32px - 8px);
+  height: 32px;
   padding: 0 4px;
 }
 
