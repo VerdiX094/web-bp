@@ -9,6 +9,8 @@ const App = () => {
   const site = window.location.href.substring(0, window.location.href.indexOf(":", "http://".length-1));
   const api = `${site}/api`
 
+  const [lastExportText, setLET] = useState("");
+
   const [status, setStatusElem] = useState('Status: Idle');
 
   const [generatedLink, setGenLink] = useState('');
@@ -93,11 +95,13 @@ const App = () => {
       await getToken();
     }
     setStatus("Generating link...")
-    if (await generateLink())
+    if (await generateLink()) {
       setStatus("Done!");
+      setLET(document.querySelector("#editor").value);
+    }
     else
       setStatus("Export failed");
-    setTimeout(() => { setStatus("Idle");}, 2000)
+    setTimeout(() => { setStatus("Idle");}, 2000);
   };
 
   const generateBPData = () => {
@@ -138,6 +142,7 @@ const App = () => {
   }
 
   const openSFS = () => {
+    if (lastExportText !== document.querySelector("#editor").value) exportBP();
     let s = generatedLink.split("/");
     window.open(`sfs://rocket/${s[s.length - 1]}`);
   }
