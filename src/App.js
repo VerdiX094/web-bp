@@ -25,22 +25,24 @@ const App = () => {
     try {
       const result = await axios.post(api + "/init");
       setToken(result.data.token);
+      return result.data.token;
       //localStorage.setItem("web-bp-token", result.data.token);
     } catch (error) {
       alert('Failed to get the sharing token: ', error);
+      return "";
     };
   };
 
-  const getBPData = async(link) => {
+  const getBPData = async(link, overrideToken = "") => {
     if (!link.startsWith("https://")) link = "https://" + link;
 
     if (!link.startsWith("https://sharing.spaceflightsimulator.app/rocket/")) return false; // invalid link check
     
-    if (token === "") return false;
+    if (token === "" && overrideToken === "") return false;
 
     const params = {
       rocketLink: link,
-      clientToken: token
+      clientToken: token === "" ? overrideToken : token
     };
 
     try {
@@ -66,17 +68,22 @@ const App = () => {
 
 
   const importBP = async () => {
+    let tok = "";
     if (token === "") {
       setStatus("Initializing sharing");
-      await getToken();
+      tok = getToken();
+      if (tok === "") {
+        setStatus("Import failed");
+        setTimeout(() => { setStatus("Idle");}, 2000);
+        return;
+      }
     }
     setStatus("Downloading blueprint data");
     
-    if (await getBPData(document.querySelector("#inputLink").value))
+    if (await getBPData(document.querySelector("#inputLink").value, tok))
       setStatus("Done!");
     else
       setStatus("Import failed");
-
     setTimeout(() => { setStatus("Idle");}, 2000);
   };
 
