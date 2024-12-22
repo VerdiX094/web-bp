@@ -18,6 +18,11 @@ button, input, textarea {
   min-height: 32px;
 }
 
+input {
+  height: calc(32px - 8px);
+  padding: 0 4px;
+}
+
 button:hover {
   background-color: #505050;
   border-color: #505050;
@@ -84,7 +89,7 @@ body {
   width: 100%;
 }
 
-.exportHolder {
+.exportHolder, .bpActions {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -99,19 +104,44 @@ body {
 }
 
 .genLink > button {
-  flex-grow: 2;
+  width: 80px;
 }
 
 .genLink > input {
-  flex-grow: 3;
+  width: calc(100% - 80px - 8px);
+  height: 16px;
 }
 
 #inputLink {
-  height: calc(32px - 8px);
-  flex-grow: 4;
-  padding: 4px;
+  width: calc(100% - 80px - 8px);
 }
 
 #importBtn {
-  flex-grow: 2;
+  width: 80px;
+}
+
+@media only screen and (max-width: 320px) {
+  .genLink {
+    flex-direction: column;
+  }
+
+  .genLink > button {
+    width: 100%;
+  }
+
+  .genLink > input {
+    width: calc(100% - 8px);
+  }
+
+  .uploadHolder {
+    flex-direction: column;
+  }
+
+  #importBtn {
+    width: 100%;
+  }
+
+  #inputLink {
+    width: calc(100% - 8px);
+  }
 }

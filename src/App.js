@@ -4,15 +4,14 @@ import { useState, useEffect } from 'react';
 import { Analytics } from "@vercel/analytics/react"
 
 const App = () => {
+
   const [token, setToken] = useState("");
-  const [link, setLink] = useState("");
   const site = window.location.href.substring(0, window.location.href.indexOf(":", "http://".length-1));
   const api = `${site}/api`
 
-  const [text, setText] = useState(''); // Initial value can be empty or pre-populated
   const [status, setStatusElem] = useState('Status: Idle');
 
-  const [generatedLink, setGenLink] = useState('')
+  const [generatedLink, setGenLink] = useState('');
 
   //useEffect(() => {
   //  setToken(localStorage.getItem("web-bp-token") ?? "");
@@ -22,27 +21,22 @@ const App = () => {
     setStatusElem("Status: " + st);
   }
 
-  // Step 2: Function to handle changes in the textarea
-  const handleTextChange = (event) => {
-    setText(event.target.value); // Update state with the new value from the textarea
-  };
-
   const getToken = async () => {
     try {
       const result = await axios.post(api + "/init");
       setToken(result.data.token);
       //localStorage.setItem("web-bp-token", result.data.token);
     } catch (error) {
-      alert('getToken() error: ', error);
+      alert('Failed to get the sharing token: ', error);
     };
   };
 
-  const getBPData = async() => {
-    if (!link.startsWith("https://")) setLink("https://" + link);
+  const getBPData = async(link) => {
+    if (!link.startsWith("https://")) link = "https://" + link;
 
-    if (!link.startsWith("https://sharing.spaceflightsimulator.app/rocket/")) return; // invalid link check
+    if (!link.startsWith("https://sharing.spaceflightsimulator.app/rocket/")) return false; // invalid link check
     
-    if (token === "") return;
+    if (token === "") return false;
 
     const params = {
       rocketLink: link,
@@ -63,12 +57,11 @@ const App = () => {
         alert("Couldn't download blueprint data. Either the sharing system is down or recently changed.");
       };
     } catch (error) {
-      console.error("getBPData() error: " + error);
+      console.error("Failed to download the blueprint: " + error);
+      return false;
     }
-  };
 
-  const onLinkChange = (e) => {
-    setLink(e.target.value);
+    return true;
   };
 
 
@@ -78,8 +71,12 @@ const App = () => {
       await getToken();
     }
     setStatus("Downloading blueprint data");
-    await getBPData();
-    setStatus("Done!");
+    
+    if (await getBPData(document.querySelector("#inputLink").value))
+      setStatus("Done!");
+    else
+      setStatus("Import failed");
+
     setTimeout(() => { setStatus("Idle");}, 2000);
   };
 
@@ -129,7 +126,7 @@ const App = () => {
   }
 
   const openSFS = () => {
-    let s = link.split("/");
+    let s = generatedLink.split("/");
     window.open(`sfs://rocket/${s[s.length - 1]}`);
   }
 
@@ -137,17 +134,20 @@ const App = () => {
     <div className="App">
       <div className="title">WebBP</div>
       <div className="uploadHolder">
-        <input id="inputLink" placeholder="BP link" onChange={onLinkChange}></input>
+        <input id="inputLink" placeholder="BP link"></input>
         <button id="importBtn" onClick={importBP}>Import</button>
       </div>
       <div className="editor-holder">
-        <textarea id="editor" onChange={handleTextChange} name=""></textarea>
+        <textarea id="editor" name=""></textarea>
       </div>
+      <div id="status">{status}</div>
       <div className="exportHolder">
         <div className="genLink">
           <button onClick={exportBP}>Export</button>
-          <input type="text" value={generatedLink} readOnly="1"></input>
+          <input type="text" value={generatedLink} placeholder="Exported link" readOnly="1"></input>
         </div>
+      </div>
+      <div className="bpActions">
         <button onClick={copyLink}>Copy link</button>
         <button onClick={openSFS}>Open SFS with link</button>
       </div>
