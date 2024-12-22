@@ -66,7 +66,7 @@ const App = () => {
 
 
   const importBP = async () => {
-    if (token == "") {
+    if (token === "") {
       setStatus("Initializing sharing");
       await getToken();
     }
@@ -81,13 +81,15 @@ const App = () => {
   };
 
   const exportBP = async () => {
-    if (token == "") {
+    if (token === "") {
       setStatus("Initializing sharing");
       await getToken();
     }
     setStatus("Generating link...")
-    await generateLink();
-    setStatus("Done!");
+    if (await generateLink())
+      setStatus("Done!");
+    else
+      setStatus("Export failed");
     setTimeout(() => { setStatus("Idle");}, 2000)
   };
 
@@ -105,7 +107,7 @@ const App = () => {
 
     if (t === "") {
       alert("Invalid BP!");
-      return;
+      return false;
     };
 
     const body = {
@@ -118,7 +120,10 @@ const App = () => {
       setGenLink(result.data.url);
     } catch (error) {
       alert('generateLink() error: ', error);
+      return false;
     };
+
+    return true;
   };
 
   const copyLink = () => {
