@@ -145,8 +145,8 @@ const App = () => {
     navigator.clipboard.writeText(generatedLink);
   }
 
-  const openSFS = () => {
-    let link = exportBP();
+  const openSFS = async () => {
+    let link = await exportBP();
     console.log(link);
     let s = (link ?? generatedLink).split("/");
     window.open(`sfs://rocket/${s[s.length - 1]}`);
