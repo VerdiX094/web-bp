@@ -179,7 +179,7 @@ const App = () => {
       {pipMode &&
         <div id="pip-bar">
           <button onClick={pasteImport}>Paste & Import</button>
-          <button>Export to SFS</button>
+          <button onClick={openSFS}>Export to SFS</button>
         </div>
       }
 
