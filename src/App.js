@@ -179,22 +179,17 @@ const App = () => {
           <button onClick={() => {setPiPMode(false);}}>x</button>
         </div>
       }
-
       
+      <div className="editor-holder">
+        <textarea id="editor" className={pipMode ? 'fullscreen-editor' : 'normal-editor'} name=""></textarea>
+      </div>
+
       {pipMode &&
         <div id="pip-bar">
           <button onClick={() => {pasteImport();}}>Paste & Import</button>
           <button onClick={() => {openSFS();}}>Export to SFS</button>
         </div>
       }
-
-      <div className="editor-holder">
-        {pipMode &&
-          <textarea id="editor" className="fullscreen-editor" name=""></textarea>
-        }{!pipMode &&
-          <textarea id="editor" className="normal-editor" name=""></textarea>
-        }
-      </div>
 
       {!pipMode &&
       <div className="pip-disable">
