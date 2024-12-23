@@ -83,7 +83,11 @@ const App = () => {
     }
     setStatus("Downloading blueprint data");
     
-    if (await getBPData(overrideLink === null ? document.querySelector("#inputLink").value : overrideLink, tok))
+    let l = overrideLink === null ? document.querySelector("#inputLink").value : overrideLink;
+
+    console.log(l);
+
+    if (await getBPData(l, tok))
       setStatus("Done!");
     else
       setStatus("Import failed");
