@@ -83,7 +83,7 @@ const App = () => {
     }
     setStatus("Downloading blueprint data");
     
-    if (await getBPData(overrideLink ?? document.querySelector("#inputLink").value, tok))
+    if (await getBPData(overrideLink === null ? document.querySelector("#inputLink").value : overrideLink, tok))
       setStatus("Done!");
     else
       setStatus("Import failed");
@@ -127,7 +127,7 @@ const App = () => {
     };
 
     const body = {
-      token: tok ?? token,
+      token: tok === null ? token : tok,
       data: t
     };
     try {
@@ -148,7 +148,7 @@ const App = () => {
   const openSFS = async () => {
     let link = await exportBP();
     console.log(link);
-    let s = (link ?? generatedLink).split("/");
+    let s = (link === null ? generatedLink : link).split("/");
     window.open(`sfs://rocket/${s[s.length - 1]}`);
   }
 
