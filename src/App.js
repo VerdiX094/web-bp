@@ -147,6 +147,7 @@ const App = () => {
 
   const openSFS = () => {
     let link = exportBP();
+    console.log(link);
     let s = (link ?? generatedLink).split("/");
     window.open(`sfs://rocket/${s[s.length - 1]}`);
   }
