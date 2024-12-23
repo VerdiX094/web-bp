@@ -74,7 +74,7 @@ const App = () => {
     let tok = "";
     if (token === "") {
       setStatus("Initializing sharing");
-      tok = getToken();
+      tok = await getToken();
       if (tok === "") {
         setStatus("Import failed");
         setTimeout(() => { setStatus("Idle");}, 2000);
@@ -91,9 +91,10 @@ const App = () => {
   };
 
   const exportBP = async () => {
+    let overrideTok = null;
     if (token === "") {
       setStatus("Initializing sharing");
-      await getToken();
+      overrideTok = await getToken();
     }
     let link = await generateLink();
     setStatus("Generating link...")
@@ -117,7 +118,7 @@ const App = () => {
     };
   };
 
-  const generateLink = async () => {
+  const generateLink = async (tok = null) => {
     const t = generateBPData();
 
     if (t === "") {
@@ -126,7 +127,7 @@ const App = () => {
     };
 
     const body = {
-      token: token,
+      token: tok ?? token,
       data: t
     };
     try {
