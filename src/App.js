@@ -169,7 +169,7 @@ const App = () => {
         <div className="title">WebBP</div>
         <div className="uploadHolder">
           <input id="inputLink" placeholder="BP link"></input>
-          <button id="importBtn" onClick={importBP}>Import</button>
+          <button id="importBtn" onClick={() => {importBP();}}>Import</button>
         </div>
       </div>
       }
@@ -183,8 +183,8 @@ const App = () => {
       
       {pipMode &&
         <div id="pip-bar">
-          <button onClick={pasteImport}>Paste & Import</button>
-          <button onClick={openSFS}>Export to SFS</button>
+          <button onClick={() => {pasteImport();}}>Paste & Import</button>
+          <button onClick={() => {openSFS();}}>Export to SFS</button>
         </div>
       }
 
@@ -201,13 +201,13 @@ const App = () => {
         <div id="status">{status}</div>
         <div className="exportHolder">
           <div className="genLink">
-            <button onClick={exportBP}>Export</button>
+            <button onClick={() => {exportBP();}}>Export</button>
             <input type="text" value={generatedLink} placeholder="Exported link" readOnly="1"></input>
           </div>
         </div>
         <div className="bpActions">
-          <button onClick={copyLink}>Copy link</button>
-          <button onClick={openSFS}>Open SFS with link</button>
+          <button onClick={() => {copyLink();}}>Copy link</button>
+          <button onClick={() => {openSFS();}}>Open SFS with link</button>
         </div>
         <div className="pip-toggle">
           <input type="checkbox" id="pip" onChange={(elem) => {setPiPMode(elem.target.checked); console.log(elem.target.checked);}} /> Picture-in-Picture mode
